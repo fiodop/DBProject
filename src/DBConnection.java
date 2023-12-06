@@ -68,14 +68,17 @@ public class DBConnection {
             System.out.println(e.getMessage());
         }
     }
-    public static void deleteTable(){
-        try {
-            statement = connection.createStatement();
-            String query = "DELETE FROM users";
-            statement.execute(query);
-            System.out.println("DB deleted");
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
+    /**
+    *пока раздумываю как писать удаление из дб
+     */
+//    public static void deleteTable(){
+//        try {
+//            statement = connection.createStatement();
+//            String query = "DELETE FROM users";
+//            statement.execute(query);
+//            System.out.println("DB deleted");
+//        }catch (Exception e){
+//            System.out.println(e.getMessage());
+//        }
+//    }
 }
