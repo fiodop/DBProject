@@ -2,12 +2,17 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class DBConnection {
+    public static final String DRIVER_NAME = "org.sqlite.JDBC";
+    public static final String DB_FULL_NAME = "jdbc:sqlite:sqlite_users:db";
+    public static final String DB_NAME = "users";
+    public static final String CREATE_TABLE = "CREATE TABLE '" + DB_NAME + "' (id INTEGER PRIMARY KEY,  name VARCHAR(20), phone_number VARCHAR(11))";
+    public static final String READ_FROM_TABLE = "SELECT * FROM \'" + DB_NAME + "\'  ; ";
     static Connection connection;
     static Statement statement;
     public static void connectToDB(){
         try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:sqlite:db");
+            Class.forName(DRIVER_NAME);
+            connection = DriverManager.getConnection(DB_FULL_NAME);
             System.out.println("DB connected");
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -33,7 +38,7 @@ public class DBConnection {
             try {
                 statement = connection.createStatement();
                 statement.execute(query);
-                System.out.print("NEW user added to db");
+                System.out.println("NEW user added to db");
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
@@ -41,7 +46,7 @@ public class DBConnection {
     public static void createTable(){
         try {
             statement = connection.createStatement();
-            statement.execute("CREATE TABLE users (id INTEGER PRIMARY KEY,  name VARCHAR(20), phone_number VARCHAR(11))");
+            statement.execute(CREATE_TABLE);
             System.out.println("Table created");
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -50,8 +55,7 @@ public class DBConnection {
     public static void readFromTable(){
         try {
             statement = connection.createStatement();
-            String query = "SELECT id, name, phone_number FROM users";
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = statement.executeQuery(READ_FROM_TABLE);
             while (rs.next()){
                 int id = rs.getInt("id");
                 String name = rs.getString("name");

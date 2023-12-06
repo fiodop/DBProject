@@ -9,13 +9,5 @@ public class Main {
         DBConnection.createTable();
         DBConnection.insertToTable();
         DBConnection.readFromTable();
-
-//        try{
-//            Class.forName("org.sqlite.JDBC");
-//            Connection connection = DriverManager.getConnection("jdbc:sqlite:sqlite.db");
-//            System.out.println("DB connected");
-//        }catch (Exception e){
-//            System.out.println(e.getMessage());
-//        }
     }
 }
