@@ -9,5 +9,6 @@ public class Main {
         DBConnection.createTable();
         DBConnection.insertToTable();
         DBConnection.readFromTable();
+        DBConnection.deleteFromTable();
     }
 }

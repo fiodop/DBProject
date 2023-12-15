@@ -1,4 +1,7 @@
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class DBConnection {
@@ -7,6 +10,10 @@ public class DBConnection {
     public static final String DB_NAME = "users";
     public static final String CREATE_TABLE = "CREATE TABLE '" + DB_NAME + "' (id INTEGER PRIMARY KEY,  name VARCHAR(20), phone_number VARCHAR(11))";
     public static final String READ_FROM_TABLE = "SELECT * FROM \'" + DB_NAME + "\'  ; ";
+    public static String name;
+    public static String phoneNumber;
+    public static final String INSERT_INTO_TABLE = "INSERT INTO '" + DB_NAME + "' (name, phone_number) VALUES ('\" + '" + name + "'\"','\" + '" + phoneNumber + "' \")";
+    public static final String DELETE_FOM_TABLE = "DELETE FROM '" + DB_NAME + "'WHERE id = ";
     static Connection connection;
     static Statement statement;
     public static void connectToDB(){
@@ -31,13 +38,12 @@ public class DBConnection {
     public static void insertToTable(){
         Scanner scanner = new Scanner(System.in);
             System.out.println("Insert name:");
-            String name = scanner.nextLine();
+            name = scanner.nextLine();
             System.out.println("Insert phone number:");
-            String phoneNumber = scanner.nextLine();
-            String query = "INSERT INTO users (name, phone_number) VALUES ('" + name + "','" + phoneNumber + "')";
+            phoneNumber = scanner.nextLine();
             try {
                 statement = connection.createStatement();
-                statement.execute(query);
+                statement.execute(INSERT_INTO_TABLE);
                 System.out.println("NEW user added to db");
             }catch (Exception e){
                 System.out.println(e.getMessage());
@@ -52,33 +58,32 @@ public class DBConnection {
             System.out.println(e.getMessage());
         }
     }
-    public static void readFromTable(){
+    public static List readFromTable(){
+        ArrayList arr = new ArrayList<>();
         try {
             statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(READ_FROM_TABLE);
             while (rs.next()){
-                int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String phoneNumber = rs.getString("phone_number");
-                System.out.println(id + " " + name + " " + phoneNumber);
+                Collections.addAll(arr, name, phoneNumber);
                 rs.close();
-                statement.close();
             }
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
+        return arr;
     }
-    /**
-    *пока раздумываю как писать удаление из дб
-     */
-//    public static void deleteTable(){
-//        try {
-//            statement = connection.createStatement();
-//            String query = "DELETE FROM users";
-//            statement.execute(query);
-//            System.out.println("DB deleted");
-//        }catch (Exception e){
-//            System.out.println(e.getMessage());
-//        }
-//    }
+    public static void deleteFromTable(){
+        try {
+            statement = connection.createStatement();
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Insert id");
+            String delete = scanner.nextLine();
+            statement.execute(DELETE_FOM_TABLE + delete);
+            System.out.println("Row, where id = '" + delete + "'deleted");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
 }
