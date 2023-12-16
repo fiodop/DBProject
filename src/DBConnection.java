@@ -10,9 +10,7 @@ public class DBConnection {
     public static final String TABLE_NAME = "users";
 
     public static final String CREATE_TABLE = "CREATE TABLE '" + TABLE_NAME + "' (id INTEGER PRIMARY KEY,  name VARCHAR(20), phone VARCHAR(11));";
-    public static final String READ_FROM_TABLE = "SELECT * FROM \'" + TABLE_NAME + "\'  ; ";
     private static final String SELECT_FROM_TABLE = "SELECT * FROM \'" + TABLE_NAME + "\'  ; ";
-    private static final String DROP_DB = "DROP DATABASE '" + DB_NAME + "';";
     public static final String INSERT_INTO_TABLE = "INSERT INTO '" + TABLE_NAME + "'(name, phone) VALUES (?,?);";
     public static final String DELETE_FOM_TABLE = "DELETE FROM '" + TABLE_NAME + "'WHERE id = ";
     public static String DROP_TABLE = "DROP TABLE '" + TABLE_NAME + "';";
@@ -99,12 +97,4 @@ public class DBConnection {
             System.out.println(e.getMessage());
         }
     }
-//    public static void dropDB(){
-//        try {
-//            statement = connection.createStatement();
-//            statement.execute(DROP_DB);
-//        }catch (Exception e){
-//            System.out.println(e.getMessage());
-//        }
-//    }
 }
